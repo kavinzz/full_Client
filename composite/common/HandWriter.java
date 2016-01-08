@@ -95,6 +95,7 @@ public class HandWriter {
 					close();
 				}
 				else if(arg0.keyCode == SWT.ESC){
+					mouseDrawTraker.clear();
 					close();
 				}
 			}

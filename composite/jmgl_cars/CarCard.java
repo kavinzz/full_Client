@@ -9,13 +9,13 @@ import org.eclipse.swt.SWT;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import config.DataPropMananger;
+import config.WindowPropsMananger;
 
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 
 import common.HandWriter;
-
 import ui.MainWindow;
 import data.DataPackage;
 import data.CarRecord;
@@ -30,7 +30,6 @@ public class CarCard extends Composite {
 	private Button outBtn;
 	
 	private CarRecord carRecord;
-	private byte[] watcherHW;
 	/**
 	 * Create the composite.
 	 * @param parent
@@ -105,15 +104,9 @@ public class CarCard extends Composite {
 		outBtn.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				HandWriter hWriter = new HandWriter();
-				watcherHW = hWriter.open();
-				if(watcherHW != null){
-					MessageBox confirmBox  = new MessageBox(getParent().getShell(),SWT.OK|SWT.CANCEL);
-					confirmBox.setText("请确认");
-					confirmBox.setMessage("是否确认该车辆已经离开监管区？");
-					if(confirmBox.open() == SWT.OK){
-						sendChangeRequest();
-					}
+				OutConfirmDlg outConfirmDlg = new OutConfirmDlg(getShell(), getStyle());
+				if(outConfirmDlg.open(carRecord) == WindowPropsMananger.CLOSE_FLAG){
+					outConfirmDlg = null;
 				}
 			}
 		});
@@ -145,22 +138,6 @@ public class CarCard extends Composite {
 			outBtn.setEnabled(false); 
 			this.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_DARK_SHADOW));
 		}
-	}
-	
-	private void sendChangeRequest(){
-		if(MainWindow.getInstance().connectServer()){
-			MainWindow.getInstance().sendDataToServer(new DataPackage(MainWindow.VERSION, DataPropMananger.CMD_JMGL,
-					DataPropMananger.CAR_CHANGE_RECORD, MainWindow.my_company, packCarRecords()));
-		}
-	}
-	
-	private Vector<CarRecord> packCarRecords(){
-		Vector<CarRecord> carRecords = new Vector<CarRecord>();
-		CarRecord vRecord = new CarRecord();
-		vRecord.setUuid(carRecord.getUuid());
-		vRecord.setOut_doorHW(watcherHW);
-		carRecords.add(vRecord);
-		return carRecords;
 	}
 	
 	private void openRecordDetailDlg(){

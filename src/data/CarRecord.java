@@ -19,6 +19,7 @@ public class CarRecord implements Serializable{
     private boolean isFinish = false;
     private byte[] watherHW;
     private byte[] doorHW;
+    private byte[] out_watcherHW;
     private byte[] out_doorHW;
     private String idType;
     private String idNum;
@@ -223,5 +224,19 @@ public class CarRecord implements Serializable{
 	 */
 	public void setCarId(String carId) {
 		this.carId = carId;
+	}
+
+	/**
+	 * @return the out_watcherHW
+	 */
+	public byte[] getOut_watcherHW() {
+		return out_watcherHW;
+	}
+
+	/**
+	 * @param out_watcherHW the out_watcherHW to set
+	 */
+	public void setOut_watcherHW(byte[] out_watcherHW) {
+		this.out_watcherHW = out_watcherHW;
 	} 
 }

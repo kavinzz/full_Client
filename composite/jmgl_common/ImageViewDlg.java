@@ -67,13 +67,15 @@ public class ImageViewDlg extends Dialog {
 		
 	}
 	
-	public void shwoImg(byte[] wbytes,byte[] dbytes,byte[] odbytes){
+	public void shwoImg(byte[] wbytes,byte[] dbytes,byte[] odbytes,byte[] owbytes){
 		ImageViewer watcherImg = new ImageViewer(shell, getStyle());
 		ImageViewer doorImg = new ImageViewer(shell, getStyle());
+		ImageViewer out_watcherImg = new ImageViewer(shell, getStyle());
 		ImageViewer out_doorImg = new ImageViewer(shell, getStyle());
 				
-		watcherImg.shwoImageByBytes("带领警察签名：", wbytes, 600, 500);
+		watcherImg.shwoImageByBytes("带领警察签名（进）：", wbytes, 600, 500);
 		doorImg.shwoImageByBytes("监门警察签名（进）：", dbytes, 600, 500);
+		out_watcherImg.shwoImageByBytes("带领警察签名（出）：", owbytes, 600, 500);
 		out_doorImg.shwoImageByBytes("监门警察签名（出）：", odbytes, 600, 500);
 		shell.layout();
 		

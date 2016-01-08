@@ -265,7 +265,10 @@ public class MutiInOutAddDlg extends CriminalInfoDlg{
 			public void widgetSelected(SelectionEvent e) {
 				HandWriter hWriter = new HandWriter();
 				watcherHW = hWriter.open();
-				if(watcherHW == null) MainWindow.showErrorMessageBox(shell, "押解警察签名读取错误，请重签!");
+				if(watcherHW == null){
+					MainWindow.showErrorMessageBox(shell, "押解警察签名读取错误，请重签!");
+					watcherButton.setText("点击按钮进行签名");
+				}
 				else watcherButton.setText("签名已保存！"); 
 			}
 		});
@@ -279,7 +282,10 @@ public class MutiInOutAddDlg extends CriminalInfoDlg{
 			public void widgetSelected(SelectionEvent e) {
 				HandWriter hWriter = new HandWriter();
 				doorHW = hWriter.open();
-				if(doorHW == null) MainWindow.showErrorMessageBox(shell, "监门警察签名读取错误，请重签!");
+				if(doorHW == null){
+					MainWindow.showErrorMessageBox(shell, "监门警察签名读取错误，请重签!");
+					doorButton.setText("点击按钮进行签名");
+				}
 				else doorButton.setText("签名已保存！"); 
 			}
 		});

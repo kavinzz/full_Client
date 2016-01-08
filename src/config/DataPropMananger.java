@@ -98,4 +98,11 @@ public class DataPropMananger {
 		else if(num == ST_OUT) return "³ö¼àÃÅ";
 		return "";
 	}
+	
+	public static int getCompanyById(int num){
+		int i = -1;
+		if(num > 10) i = num/10;
+		else i = num;
+		return i;
+	}
 }

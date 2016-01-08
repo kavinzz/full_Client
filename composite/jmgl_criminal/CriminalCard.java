@@ -200,6 +200,7 @@ public class CriminalCard extends Composite {
 			this.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_DARK_SHADOW));
 			selectButton.setEnabled(false);
 			selectButton.setVisible(false);
+			inoutBtn.setEnabled(false);
 		}
 			
 		else if(criminalInfo.getState() == DataPropMananger.ST_OUT) 

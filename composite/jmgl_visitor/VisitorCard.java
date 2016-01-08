@@ -9,13 +9,14 @@ import org.eclipse.swt.SWT;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 import config.DataPropMananger;
+import config.WindowPropsMananger;
 
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
 
 import common.HandWriter;
-
 import ui.MainWindow;
 import data.DataPackage;
 import data.VisitorRecord;
@@ -26,10 +27,14 @@ public class VisitorCard extends Composite {
 	private Label companyLable;
 	private Label reasonLable;
 	private Label timeLable;
+	private Label companyNumLable;
 	private Button outBtn;
 	
 	private VisitorRecord visitorRecord;
 	private byte[] watcherHW;
+	private Button selectBtn;
+	private boolean isSelected = false;
+	
 	/**
 	 * Create the composite.
 	 * @param parent
@@ -39,6 +44,26 @@ public class VisitorCard extends Composite {
 		super(parent, SWT.BORDER);
 		setTouchEnabled(true);
 		setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_BACKGROUND));
+		
+		companyNumLable = new Label(this, SWT.WRAP);
+		companyNumLable.setBounds(0, 0, 47, 63);
+		
+		selectBtn = new Button(this, SWT.CHECK);
+		selectBtn.setBounds(10, 180, 13, 17);
+		selectBtn.addSelectionListener(new SelectionListener() {
+					
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				// TODO Auto-generated method stub
+				isSelected = !isSelected;
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 		
 		Label lblNewLabel = new Label(this, SWT.NONE);
 		lblNewLabel.setAlignment(SWT.RIGHT);
@@ -108,7 +133,7 @@ public class VisitorCard extends Composite {
 		outBtn.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				HandWriter hWriter = new HandWriter();
+				/*HandWriter hWriter = new HandWriter();
 				watcherHW = hWriter.open();
 				if(watcherHW != null){
 					MessageBox confirmBox  = new MessageBox(getParent().getShell(),SWT.OK|SWT.CANCEL);
@@ -117,6 +142,10 @@ public class VisitorCard extends Composite {
 					if(confirmBox.open() == SWT.OK){
 						sendChangeRequest();
 					}
+				}*/
+				OutConfirmDlg outConfirmDlg = new OutConfirmDlg(getShell(), getStyle());
+				if(outConfirmDlg.open(visitorRecord) == WindowPropsMananger.CLOSE_FLAG){
+					outConfirmDlg = null;
 				}
 			}
 		});
@@ -136,26 +165,24 @@ public class VisitorCard extends Composite {
 		timeLable.setText(vRecord.getIn_time());
 		if(vRecord.isFinish()){
 			outBtn.setText("Íê³É");
-			outBtn.setEnabled(false); 
+			outBtn.setEnabled(false);
+			selectBtn.setEnabled(false);
 			this.setBackground(SWTResourceManager.getColor(SWT.COLOR_WIDGET_DARK_SHADOW));
 		}
-	}
-	
-	private void sendChangeRequest(){
-		if(MainWindow.getInstance().connectServer()){
-			MainWindow.getInstance().sendDataToServer(new DataPackage(MainWindow.VERSION, DataPropMananger.CMD_JMGL,
-					DataPropMananger.VISITOR_CHANGE_RECORD, MainWindow.my_company, packVisitorRecords()));
+		
+		if(MainWindow.my_company == 0){
+			companyNumLable.setText(DataPropMananger.getCompanyName(vRecord.getStarter()));
 		}
 	}
 	
-	private Vector<VisitorRecord> packVisitorRecords(){
-		Vector<VisitorRecord> visitorRecords = new Vector<VisitorRecord>();
-		VisitorRecord vRecord = new VisitorRecord();
-		vRecord.setUuid(visitorRecord.getUuid());
-		vRecord.setOut_doorHW(watcherHW);
-		visitorRecords.add(vRecord);
-		return visitorRecords;
+	public boolean isSelected(){
+		return isSelected;
 	}
+	
+	public VisitorRecord getVisitorRecord(){
+		return visitorRecord;
+	}
+	
 	
 	private void openRecordDetailDlg(){
 		VisitorDetailDlg rd = new VisitorDetailDlg(this.getParent().getShell(), SWT.DIALOG_TRIM|SWT.PRIMARY_MODAL);

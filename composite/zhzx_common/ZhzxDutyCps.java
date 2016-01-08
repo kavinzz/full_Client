@@ -300,6 +300,7 @@ public class ZhzxDutyCps extends Composite {
 				if(dRecord.getEndTime() !=null) timeEndLable.setText(dRecord.getEndTime());
 				if(dRecord.getNotice() != null) impText.setText(dRecord.getNotice());
 				if(dRecord.getInfo() != null) infoText.setText(dRecord.getInfo());
+				else infoText.setText("");
 				if(dRecord.isEqpOk()){
 					eqpYButton.setSelection(true);
 					eqpNButton.setSelection(false);
@@ -324,9 +325,9 @@ public class ZhzxDutyCps extends Composite {
 		telInfoDlg.telDataGetHandler(telRecords);
 	}
 	
-	public void setTelAddSuccess(){
+	public void setTelAddSuccess(Vector<TelRecord> tRecords){
 		if(telInfoDlg == null) return;
-		telInfoDlg.telAddSuccess();
+		telInfoDlg.telAddSuccess(tRecords);
 	}
 	
 	public void setTelUpdateSuccess(int i){

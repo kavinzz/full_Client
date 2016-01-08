@@ -208,6 +208,25 @@ public class VisitorInfoWindow extends Shell {
 		MenuItem mntmNewItem_4 = new MenuItem(menu_2, SWT.NONE);
 		mntmNewItem_4.setText("\u7248\u672C");
 		
+		MenuItem menuItem_2 = new MenuItem(menu, SWT.SEPARATOR);
+		
+		MenuItem menuItem_1 = new MenuItem(menu, SWT.NONE);
+		menuItem_1.setText("\u6279\u91CF\u51FA");
+		menuItem_1.addSelectionListener(new SelectionListener() {
+			
+			@Override
+			public void widgetSelected(SelectionEvent arg0) {
+				// TODO Auto-generated method stub
+				openMutiOutDlg();
+			}
+			
+			@Override
+			public void widgetDefaultSelected(SelectionEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
 		refreshDataTimerStart();
 	}
 	
@@ -320,6 +339,27 @@ public class VisitorInfoWindow extends Shell {
 				}
 			}
 		}
+	}
+	
+	private void openMutiOutDlg(){
+		Vector<VisitorRecord> selections = getSeletedCards();
+		if(selections.size() == 0) return;
+		OutConfirmDlg outConfirmDlg = new OutConfirmDlg(getShell(), getStyle());
+		if(outConfirmDlg.open(getSeletedCards()) == WindowPropsMananger.CLOSE_FLAG){
+			outConfirmDlg = null;
+		}
+	}
+	
+	private Vector<VisitorRecord> getSeletedCards(){
+		Iterator<VisitorCard> it = cards.iterator();
+		Vector<VisitorRecord> visitorCards = new Vector<VisitorRecord>();
+		while(it.hasNext()){
+			VisitorCard card = it.next();
+			if(card.isSelected()){
+				visitorCards.add(card.getVisitorRecord());
+			}
+		}
+		return visitorCards;
 	}
 	
 	private void sendUpdateRequest(){

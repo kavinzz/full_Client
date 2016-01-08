@@ -28,7 +28,7 @@ public class CarDetailDlg extends Dialog {
 	private Label label_5;
 	private Label idNumLable;
 	private Label label_7;
-	private CarRecord CarRecord;
+	private CarRecord carRecord;
 	private Label label_6;
 	private Label carIdLable;
 
@@ -165,7 +165,7 @@ public class CarDetailDlg extends Dialog {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				ImageViewDlg imageViewDlg = new ImageViewDlg(shell, getStyle());
-				imageViewDlg.shwoImg(CarRecord.getWatherHW(), CarRecord.getDoorHW(),CarRecord.getOut_doorHW());
+				imageViewDlg.shwoImg(carRecord.getWatherHW(), carRecord.getDoorHW(),carRecord.getOut_doorHW(),carRecord.getOut_watcherHW());
 				if(imageViewDlg.open() == WindowPropsMananger.CLOSE_FLAG){
 					imageViewDlg = null;
 				}
@@ -187,7 +187,7 @@ public class CarDetailDlg extends Dialog {
 	}
 	
 	public void setData(CarRecord vRecord){
-		CarRecord = vRecord;
+		carRecord = vRecord;
 		nameLable.setText(vRecord.getDriverName());
 		carIdLable.setText(vRecord.getCarId());
 		companyLable.setText(vRecord.getCompany());

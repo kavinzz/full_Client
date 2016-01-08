@@ -165,7 +165,7 @@ public class VisitorDetailDlg extends Dialog {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				ImageViewDlg imageViewDlg = new ImageViewDlg(shell, getStyle());
-				imageViewDlg.shwoImg(visitorRecord.getWatherHW(), visitorRecord.getDoorHW(),visitorRecord.getOut_doorHW());
+				imageViewDlg.shwoImg(visitorRecord.getWatherHW(), visitorRecord.getDoorHW(),visitorRecord.getOut_doorHW(),visitorRecord.getOut_watcherHW());
 				if(imageViewDlg.open() == WindowPropsMananger.CLOSE_FLAG){
 					imageViewDlg = null;
 				}

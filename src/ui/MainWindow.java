@@ -88,7 +88,7 @@ public class MainWindow {
 	}
 	
 	protected void createContents() {
-		shell = new Shell(SWT.MIN|SWT.CLOSE|SWT.MAX);
+		shell = new Shell(SWT.MIN|SWT.CLOSE);
 		shell.setBackground(SWTResourceManager.getColor(SWT.COLOR_TITLE_INACTIVE_BACKGROUND_GRADIENT));
 		shell.setImage(SWTResourceManager.getImage("D:\\CTS\\source\\icon.png"));
 		shell.setSize(WindowPropsMananger.WD_WIDTH, WindowPropsMananger.WD_HEIGHT);
@@ -277,7 +277,7 @@ public class MainWindow {
 				break;
 			case DataPropMananger.ZHZX_TEL_ADD:
 				System.out.print("Client recieve ZHZX_TEL_ADD cmd \n");
-				zhzxDutyCps.setTelAddSuccess();
+				zhzxDutyCps.setTelAddSuccess(data.getTelData());
 				disconnectServer();
 				break;
 			case DataPropMananger.ZHZX_TEL_UPDATE_NEXT:

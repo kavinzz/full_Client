@@ -87,7 +87,7 @@ public class DutyInfoCps extends Composite {
 		
 		nameLabel = new Label(this, SWT.NONE);
 		nameLabel.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
-		nameLabel.setText("\u4E00\u4E2A\u4EBA \u4E24\u4E2A\u4EBA \u4E09\u4E2A\u4EBA \u56DB\u4E2A\u4EBA");
+		nameLabel.setText("\u6570\u636E\u83B7\u53D6\u4E2D\uFF0C\u8BF7\u7A0D\u7B49......");
 		nameLabel.setFont(SWTResourceManager.getFont("·ÂËÎ", 20, SWT.BOLD));
 		nameLabel.setBounds(111, 61, 460, 27);
 		
@@ -412,6 +412,7 @@ public class DutyInfoCps extends Composite {
 				if(dRecord.getEndTime() !=null) timeEndLable.setText(dRecord.getEndTime());
 				if(dRecord.getNotice() != null) impText.setText(dRecord.getNotice());
 				if(dRecord.getInfo() != null) infoText.setText(dRecord.getInfo());
+				else infoText.setText("");
 				menNumLable.setText(String.valueOf(dRecord.getSafeMenNum()));
 				carNumLable.setText(String.valueOf(dRecord.getSafeCarNum()));
 				if(dRecord.isEqpOk()){
@@ -498,7 +499,7 @@ public class DutyInfoCps extends Composite {
 	private void sendNoticeChangeRequest(){
 		Vector<JmglDutyRecord> jmglDutyRecords = new Vector<JmglDutyRecord>();
 		JmglDutyRecord jmglDutyRecord = new JmglDutyRecord();
-		jmglDutyRecord.setUuid(dutyRecord.getUuid());
+		jmglDutyRecord.setStarter(MainWindow.my_company);
 		jmglDutyRecord.setNotice(impText.getText());
 		jmglDutyRecords.add(jmglDutyRecord);
 		if(MainWindow.getInstance().connectServer())

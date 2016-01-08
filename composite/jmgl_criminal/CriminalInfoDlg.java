@@ -124,7 +124,7 @@ public class CriminalInfoDlg extends Dialog {
 		companyCombo.setItems(new String[] {"\u4E00\u5206\u76D1\u72F1", "\u4E8C\u5206\u76D1\u72F1", "\u4E09\u5206\u76D1\u72F1", "\u56DB\u5206\u76D1\u72F1", "\u4E94\u5206\u76D1\u72F1", "\u4E2D\u5FC3\u533B\u9662"});
 		companyCombo.setFont(SWTResourceManager.getFont("宋体", 14, SWT.NORMAL));
 		companyCombo.setBounds(100, 99, 110, 27);
-		companyCombo.select(0);
+		companyCombo.select(DataPropMananger.getCompanyById(MainWindow.my_company) - 1);
 		
 		Label label_2 = new Label(shell, SWT.NONE);
 		label_2.setText("\u8FDB \u6216 \u51FA\uFF1A");
@@ -144,6 +144,10 @@ public class CriminalInfoDlg extends Dialog {
 		womanButton.setText("\u5973");
 		womanButton.setFont(SWTResourceManager.getFont("宋体", 14, SWT.NORMAL));
 		womanButton.setBounds(48, 10, 42, 17);
+		if(DataPropMananger.getCompanyById(MainWindow.my_company) == 4){
+			manbutton.setSelection(false);
+			womanButton.setSelection(true);
+		}
 		
 		Composite composite_1 = new Composite(shell, SWT.NONE);
 		composite_1.setBounds(347, 94, 90, 35);
@@ -325,7 +329,10 @@ public class CriminalInfoDlg extends Dialog {
 			public void widgetSelected(SelectionEvent e) {
 				HandWriter hWriter = new HandWriter();
 				watcherHW = hWriter.open();
-				if(watcherHW == null) MainWindow.showErrorMessageBox(shell, "押解警察签名读取错误，请重签!");
+				if(watcherHW == null){
+					MainWindow.showErrorMessageBox(shell, "押解警察签名读取错误，请重签!");
+					watcherButton.setText("点击按钮进行签名");
+				}
 				else watcherButton.setText("签名已保存！"); 
 			}
 		});
@@ -339,7 +346,10 @@ public class CriminalInfoDlg extends Dialog {
 			public void widgetSelected(SelectionEvent e) {
 				HandWriter hWriter = new HandWriter();
 				doorHW = hWriter.open();
-				if(doorHW == null) MainWindow.showErrorMessageBox(shell, "监门警察签名读取错误，请重签!");
+				if(doorHW == null){
+					MainWindow.showErrorMessageBox(shell, "监门警察签名读取错误，请重签!");
+					doorButton.setText("点击按钮进行签名");
+				}
 				else doorButton.setText("签名已保存！"); 
 			}
 		});

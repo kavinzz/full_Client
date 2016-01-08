@@ -461,14 +461,16 @@ public class TelInfoDlg extends Dialog {
 		showDataIntable();
 	}
 	
-	public void telAddSuccess(){
-		addData();
+	public void telAddSuccess(Vector<TelRecord> tRecords){
+		saveData(tRecords);
 		Display.getDefault().syncExec(new Runnable() {
 			@Override
 			public void run() {
 				okButton.setEnabled(true);
 				companyCombo.select(-1);
+				companyCombo.setText("");
 				leaderCombo.select(-1);
+				leaderCombo.setText("");
 				numberText.setText("");
 				reasonText.setText("");
 			}
@@ -487,14 +489,8 @@ public class TelInfoDlg extends Dialog {
 		}
 	}
 	
-	private void addData(){
-		if(tempRecord != null ) {
-			telRecords.add(0,tempRecord);
-			tempRecord = null;
-		}
-	}
-	
 	private void showDataIntable(){
+		System.out.print(telRecords.size());
 		if(telRecords.size() == 0) return;
 		
 		Display.getDefault().syncExec(new Runnable() {
@@ -570,6 +566,7 @@ public class TelInfoDlg extends Dialog {
 		tempRecord.setNumber(numberText.getText());
 		tempRecord.setSt_reason(reasonText.getText());
 		tempRecord.setStarter(MainWindow.my_company);
+		tempRecord.setLines(1);
 		//telRecord.setDuty_index(duty_index);
 		telRecords.add(tempRecord);
 		
